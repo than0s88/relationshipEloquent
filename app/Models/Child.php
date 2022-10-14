@@ -12,4 +12,8 @@ class Child extends Model
     public function guardian(){
         return $this->belongsTo(Guardian::class);
     }
+
+    public function school(){
+        return $this->hasOne(School::class);
+    }
 }

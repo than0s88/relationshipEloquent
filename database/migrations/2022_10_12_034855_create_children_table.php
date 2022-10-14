@@ -14,8 +14,9 @@ class CreateChildrenTable extends Migration
     public function up()
     {
         Schema::create('children', function (Blueprint $table) {
-            $table->id('child_id');
+            $table->id();
             $table->integer('guardian_id');
+            $table->integer('school_id');
             $table->string('first_name');
             $table->string('last_name');
             $table->string('gender');

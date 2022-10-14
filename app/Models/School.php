@@ -14,5 +14,8 @@ class School extends Model
         'address'
     ];
 
+    public function children(){
+        return $this->hasMany(Child::class);
+    }
 
 }

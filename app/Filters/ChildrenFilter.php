@@ -9,6 +9,7 @@ class ChildrenFilter extends ApiFilter {
 
     protected $safeParms = [
         'guardianId' => ['eq'],
+        'schoolId' => ['eq'],
         'firstName' => ['eq'],
         'lastName' => ['eq'],
         'gender' => ['eq'],
@@ -17,6 +18,7 @@ class ChildrenFilter extends ApiFilter {
 
     protected $columnMap = [
         'guardianId' => 'guardian_id',
+        'schoolId' => 'school_id',
         'firstName' => 'first_name',
         'lastName' => 'last_name',
         'birthDate' => 'birth_date'

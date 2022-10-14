@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Child;
 use App\Models\Guardian;
+use App\Models\School;
 use Illuminate\Database\Seeder;
 
 class GuardianSeeder extends Seeder
@@ -14,32 +16,39 @@ class GuardianSeeder extends Seeder
      */
 
 
-    public function run(){
-        Guardian::factory()->count(25)->hasChildren(10)->create();
-
-        Guardian::factory()->count(100)->hasChildren(5)->create();
-
-        Guardian::factory()->count(100)->hasChildren(3)->create();
-
-        Guardian::factory()->count(100)->create();
-    }
+//    public function run(){
+//        Guardian::factory()->count(25)->hasChildren(10)->create();
 //
-//    public function run()
-//    {
-//        $guardians = Guardian::factory()->count(10)->create();
+//        Guardian::factory()->count(100)->hasChildren(5)->create();
 //
-//        // For Every User...
-//        $guardians->each(function ($guardian) {
-//            // Create 10 Issues
-//            $childrens = Child::factory()->count(3)->create([
-//                'guardian_id' => $guardian->id,
-//                'school_id' => School::factory()
-//            ]);
-//        });
-//        Guardian::factory()->count(10)->has(Child::factory()->count(3)->create([
-//            'school_id' => School::factory()
-//        ]))->create();
+//        Guardian::factory()->count(100)->hasChildren(3)->create();
+//
+//        Guardian::factory()->count(100)->create();
 //    }
+
+    public function run()
+    {
+        $guardians = Guardian::factory()->count(10)->create();
+
+        // For Guardian
+        $guardians->each(function ($guardian) {
+            // Create 10 Children
+            $childrens = Child::factory()->count(3)->create([
+                'guardian_id' => $guardian->id
+            ]);
+
+            $school = School::factory()->count(10)->create();
+
+            // For Every Children...
+            $childrens->each(function ($school) {
+                // Create 3 Schools
+                $childrens = Child::factory()->count(3)->create([
+                    'school_id' => $school->id
+                ]);
+            });
+        });
+
+    }
 
 //
 //    public function run()

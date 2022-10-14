@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Filters\ChildrenFilter;
 use App\Http\Resources\ChildCollection;
+use App\Http\Resources\GuardianCollection;
 use App\Models\Child;
+use App\Models\Guardian;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -18,16 +20,23 @@ class ChildrenController extends Controller
 
     public function index(Request $request)
     {
-        $filter = new ChildrenFilter();
-        $queryItems = $filter->transform($request);
+        $children = Child::with('guardian','school')->get();
+        return new ChildCollection($children);
 
-        if(count($queryItems)==0){
-            return new ChildCollection(Child::paginate());
-        }else{
-            $invoices = Child::where($queryItems)->paginate();
-            return new ChildCollection($invoices->appends($request->query()));
-        }
     }
+
+//    public function index(Request $request)
+//    {
+//        $filter = new ChildrenFilter();
+//        $queryItems = $filter->transform($request);
+//
+//        if(count($queryItems)==0){
+//            return new ChildCollection(Child::paginate());
+//        }else{
+//            $invoices = Child::where($queryItems)->paginate();
+//            return new ChildCollection($invoices->appends($request->query()));
+//        }
+//    }
 
     /**
      * Show the form for creating a new resource.

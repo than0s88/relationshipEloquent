@@ -19,17 +19,25 @@ class GuardianController extends Controller
 
     public function index(Request $request)
     {
-        $filter = new GuardianFilter();
-        $filterItems = $filter->transform($request);
 
-        $includeChildrens = $request->query('includeChildrens');
-        $guardians = Guardian::where($filterItems);
-        if ($includeChildrens){
-            $guardians = $guardians->with('children');
-        }
-        return new GuardianCollection($guardians->paginate()->appends($request->query()));
+        $guardians = Guardian::with('children')->get();
+        return new GuardianCollection($guardians);
 
     }
+
+//    public function index(Request $request)
+//    {
+//        $filter = new GuardianFilter();
+//        $filterItems = $filter->transform($request);
+//
+//        $includeChildrens = $request->query('includeChildrens');
+//        $guardians = Guardian::where($filterItems);
+//        if ($includeChildrens){
+//            $guardians = $guardians->with('children');
+//        }
+//        return new GuardianCollection($guardians->paginate()->appends($request->query()));
+//
+//    }
 
     /**
      * Show the form for creating a new resource.
